@@ -1,0 +1,60 @@
+pipeline {
+    agent any 
+    stages {
+        stage('backend') { 
+            steps {
+                bat ''' 
+	cd "C:\\Users\\Itay Zrihan\\Desktop\\Project part 2\\project2"
+	python rest_app.py
+                      '''
+            }
+        }
+        stage('fronted') { 
+            steps {
+                bat ''' 
+	cd "C:\\Users\\Itay Zrihan\\Desktop\\Project part 2\\project2"
+	python web_app.py 
+                     '''                
+            }
+        }
+        stage('testing') { 
+            steps {
+                bat ''' 
+	cd "C:\\Users\\Itay Zrihan\\Desktop\\Project part 2\\project2"
+	python backend_testing.py 
+                     '''
+            }
+        }
+        stage('testing') { 
+            steps {
+                bat ''' 
+	cd "C:\\Users\\Itay Zrihan\\Desktop\\Project part 2\\project2"
+	python fronted_testing.py 
+                     '''
+            }
+        }
+        stage('testing') { 
+            steps {
+                bat ''' 
+	cd "C:\\Users\\Itay Zrihan\\Desktop\\Project part 2\\project2"
+	python combined_testing.py 
+                     '''
+            }
+        }
+        stage('testing') { 
+            steps {
+                bat ''' 
+	cd "C:\\Users\\Itay Zrihan\\Desktop\\Project part 2\\project2"
+	python clean_environemnt.py 
+                     '''
+        stage('run backend server') {
+            steps {
+              bat 'start /min python rest_app.py'
+           
+                   }
+                }
+
+            }
+        }
+    }
+}
