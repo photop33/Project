@@ -1,5 +1,5 @@
 from flask import Flask, request
-import requests, json,pymysql,datetime,time
+import requests, json,pymysql,datetime,time, os, signal
 app = Flask(__name__)
 
 # local users storage
@@ -58,5 +58,10 @@ def user(user_id):
     else:
         return {'status':"error","reson":"no such id"}, 500 # status code
 
+
+@app.route('/stop_server')
+def stop_server():
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    return 'Server stopped'
 
 app.run(host='127.0.0.1', debug=True, port=5000)

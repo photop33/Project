@@ -1,4 +1,4 @@
-import pymysql,json
+import pymysql,json,os,signal
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -16,4 +16,8 @@ def user(user_id):
     if user_name == None:
         return "<H1 id='error'>" + "no_such_user" + user_id + "</H1>"
 
+@app.route('/stop_server')
+def stop_server():
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    return 'Server stopped'
 app.run(host='127.0.0.1', debug=True, port=5001)
