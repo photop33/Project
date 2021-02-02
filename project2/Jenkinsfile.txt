@@ -8,44 +8,44 @@ pipeline {
         }
         stage('backend') { 
             steps {
-	   '''
-	python rest_app.py
-                      '''
+	 
+	bat 'python rest_app.py'
+                    
             }
         }
         stage('fronted') { 
             steps {
-                    '''
-	python web_app.py 
-                     '''                
+                  
+	bat 'python web_app.py' 
+                                  
             }
         }
         stage('testing') { 
             steps {
-	   '''
-	python backend_testing.py 
-                     '''
+	   
+	bat 'python backend_testing.py' 
+                     
             }
         }
         stage('testing') { 
             steps {
-	   '''
-	python fronted_testing.py 
-                     '''
+	   
+	bat 'python fronted_testing.py' 
+                     
             }
         }
         stage('testing') { 
             steps {
-	   '''
-	python combined_testing.py 
-                     '''
+	   
+	bat 'python combined_testing.py' 
+                     
             }
         }
         stage('testing') { 
             steps {
-	   '''
-	python clean_environemnt.py 
-                     '''
+	   
+	bat 'python clean_environemnt.py' 
+                   
         stage('run backend server') {
             steps {
               bat 'start /min python rest_app.py'
