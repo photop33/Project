@@ -9,7 +9,7 @@ users = {}
 # supported methods
 @app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def user(user_id):
-    if request.method == 'GET':
+    if request.method == 'GET':  # get info
         res = requests.get('http://127.0.0.1:5000/users/1')
         conn = pymysql.connect(host='remotemysql.com', port=3306, user='12F1HSutPL', passwd='LB8D9pgJuP',db='12F1HSutPL')
         cursor = conn.cursor()
@@ -18,7 +18,7 @@ def user(user_id):
     else:
         return {'status':"error","reason":"no such id"}, 500 # status code
 
-    if request.method == 'POST':
+    if request.method == 'POST': # post info into sql and web
         res = requests.post('http://127.0.0.1:5000/users/1', json={"user_name": "itay"})
         conn = pymysql.connect(host='remotemysql.com', port=3306, user='12F1HSutPL', passwd='LB8D9pgJuP',db='12F1HSutPL')
         conn.autocommit(True)
@@ -34,7 +34,7 @@ def user(user_id):
     else:
         return {'status':"error","reason":"id already exists"}, 500 # status code
 
-    if request.method == 'PUT':
+    if request.method == 'PUT': # update info into sql and web 
         res = requests.put('http://127.0.0.1:5000/users/1')
         conn = pymysql.connect(host='remotemysql.com', port=3306, user='12F1HSutPL', passwd='LB8D9pgJuP',db='12F1HSutPL')
         conn.autocommit(True)
@@ -46,7 +46,7 @@ def user(user_id):
     else:
         return {'status':"error","reson":"no such id"}, 500 # status code
 
-    if request.method == 'DELETE':
+    if request.method == 'DELETE': # delete info 
         res = requests.delete('http://127.0.0.1:5000/users/1')
         conn = pymysql.connect(host='remotemysql.com', port=3306, user='12F1HSutPL', passwd='LB8D9pgJuP',db='12F1HSutPL')
         conn.autocommit(True)

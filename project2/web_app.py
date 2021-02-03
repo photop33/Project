@@ -2,7 +2,7 @@ import pymysql,json,os,signal
 from flask import Flask, request
 
 app = Flask(__name__)
-
+# server runing on flask, back html and json content.
 # local users storage
 users = {}
 # supported methods
