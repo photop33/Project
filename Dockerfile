@@ -1,7 +1,5 @@
-FROM python:3.7-alpine
-ADD . /code
-WORKDIR /code
+FROM python:3
+COPY rest_app.py
 RUN pip install flask
 RUN pip install PyMySQL
-RUN chmod 644 app.py
-CMD ["python", "app.py"]
+CMD ["python", "rest_app.py"]
