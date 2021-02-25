@@ -74,10 +74,10 @@ pipeline {
             bat 'docker-compose down' 
             }
         } 
-        stage('turn off docker') { 
+        stage('helm') { 
             steps {
 	   
-            bat 'docker-compose down' 
+            bat 'helm repo' 
             }
         } 
         stage('turn off docker') { 
