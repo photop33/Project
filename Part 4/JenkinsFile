@@ -37,7 +37,7 @@ pipeline {
               steps {
                    script {
 
-                          dockerImage = project + ":$1“ 
+                          dockerImage = project + ":${BUILD_NUMBER}“ 
                            docker.withRegistry('', registryCredential) {
                            dockerImage.push() 
                          }
@@ -73,7 +73,19 @@ pipeline {
 	   
             bat 'docker-compose down' 
             }
-        }          
+        } 
+        stage('turn off docker') { 
+            steps {
+	   
+            bat 'docker-compose down' 
+            }
+        } 
+        stage('turn off docker') { 
+            steps {
+	   
+            bat 'minikube service hello-python-service –url > k8s_url.txt' 
+            }
+        }            
         stage('run backend server') {
             steps {
 
