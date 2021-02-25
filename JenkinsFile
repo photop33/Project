@@ -48,7 +48,7 @@ pipeline {
         stage('make env file') { 
             steps {
 
-                     bat 'echo IMAGE_TAG=$1 > .env'
+                     bat "echo IMAGE_TAG=${BUILD_NUMBER} > .env"
                   post {
                   always {
 
