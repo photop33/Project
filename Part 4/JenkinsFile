@@ -83,7 +83,7 @@ pipeline {
         stage('turn off docker') { 
             steps {
 	   
-            bat 'minikube service hello-python-service –url > k8s_url.txt' 
+            bat 'minikube service project –url > k8s_url.txt' 
             }
         }            
         stage('run backend server') {
@@ -94,6 +94,7 @@ pipeline {
          }
         options {
               buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '20'))
+              properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
             }
         }	
      }
