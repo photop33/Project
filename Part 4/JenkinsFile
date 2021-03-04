@@ -3,7 +3,7 @@ pipeline {
       stages {
         stage('checkout') { 
             steps {
-	git 'https://github.com/itayzrihan1/Project-part-2.git' 
+	git 'https://github.com/itayzrihan1/Project' 
             }
         }
         stage('run app') { 
@@ -37,14 +37,14 @@ pipeline {
               steps {
                    script {
 
-                          dockerImage = project + ":${BUILD_NUMBER}“ 
+                          dockerImage = project ":${BUILD_NUMBER}" 
                            docker.withRegistry('', registryCredential) {
                            dockerImage.push() 
                          }
                      }
                 }
             }
-        }
+        
         stage('make env file') { 
             steps {
 
@@ -52,7 +52,7 @@ pipeline {
                   post {
                   always {
 
-                          bat "docker rmi $registry:$1“ 
+                          bat "docker rmi $registry:${BUILD_NUMBER}"
             }
         }
         stage('run compose') { 
@@ -62,30 +62,43 @@ pipeline {
                      
             }
         }
-        stage('testing backend') { 
+        stage('testing backend docker') { 
             steps {
 	   
             bat 'docker_backend_testing.py'
             }
         }
-        stage('turn off docker') { 
+        stage('docker-compse turn off') { 
             steps {
 	   
             bat 'docker-compose down' 
             }
         } 
-        stage('helm') { 
+        stage('helm update and install chart') { 
             steps {
-	   
-            bat 'helm repo' 
+	
+            bat 'helm repo update'
+            bat 'helm install itay itayzrihan1/helm-project -set image.version=itayzrihan/project3":${BUILD_NUMBER}"
             }
         } 
-        stage('turn off docker') { 
+        stage('get url from cluster') { 
             steps {
 	   
             bat 'minikube service project –url > k8s_url.txt' 
             }
-        }            
+        }
+        stage('turn off docker') { 
+            steps {
+	   
+            bat 'K8S_backed_testing.py' 
+            }
+        }
+        stage('clean helm environment') { 
+            steps {
+	   
+            bat 'helm delete itay' 
+            }
+        }                   
         stage('run backend server') {
             steps {
 
@@ -99,4 +112,4 @@ pipeline {
         }	
      }
    }         
- }   
+}
