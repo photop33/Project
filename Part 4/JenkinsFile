@@ -78,7 +78,7 @@ pipeline {
             steps {
 	
             bat 'helm repo update'
-            bat 'helm install itay itayzrihan1/helm-project -set image.version=itayzrihan/project3":${BUILD_NUMBER}"
+            bat 'helm install itay itayzrihan1/helmproject -set image.version=itayzrihan/project3":${BUILD_NUMBER}"
             }
         } 
         stage('get url from cluster') { 
